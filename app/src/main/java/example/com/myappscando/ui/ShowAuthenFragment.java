@@ -96,7 +96,7 @@ public class ShowAuthenFragment extends Fragment implements Backable {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "insert error ...please value is emtry", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "insert error ...please value is emtry "+error, Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
