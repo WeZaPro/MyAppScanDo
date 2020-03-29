@@ -84,6 +84,7 @@ public class ShowAuthen2Fragment extends Fragment implements Backable {
                             tvProductName.setText("product_name : "+jsonObject.getString("product_name"));
                             imageUrl = jsonObject.getString("product_image");
                             tvProductCount.setText("AUTHEN : "+jsonObject.getString("count_row"));
+                            tvProductId.setText("Product id : "+jsonObject.getString("pid"));
 
                     /*Picasso.get().load(imageUrl)
                             .fit()

@@ -24,6 +24,7 @@ import java.util.Random;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import example.com.myappscando.R;
+import utils.Constants;
 
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
@@ -115,9 +116,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void sendRegistrationToServer(String token) {
-        SharedPreferences sharedPref = getSharedPreferences(Constances.MY_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences(Constants.MY_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(Constances.TOKEN, token);
+        editor.putString(Constants.TOKEN, token);
         editor.commit();
 
         Log.d("token", "send token: " + token);

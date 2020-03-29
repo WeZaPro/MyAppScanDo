@@ -42,7 +42,6 @@ public class SplashFragment extends Fragment {
             load();
         }
 
-
         return v;
     }
 

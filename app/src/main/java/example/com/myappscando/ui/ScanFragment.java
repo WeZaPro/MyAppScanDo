@@ -29,8 +29,8 @@ import java.util.List;
 import java.util.Locale;
 
 import example.com.myappscando.R;
-import example.com.myappscando.fcm.Constances;
 import utils.Backable;
+import utils.Constants;
 import utils.MyModelSaveDb;
 import utils.OnActivityResultDataChanged;
 import utils.OnScanQrButtonClicked;
@@ -82,8 +82,8 @@ public class ScanFragment extends Fragment implements Backable, OnActivityResult
         // เก็บค่า user id ไว้ที่ตัวแปล str_userid
         str_userid = sharedPreferences.getString(USER_ID, "");
         // Share Token
-        sharedPref = getActivity().getSharedPreferences(Constances.MY_PREFS, Context.MODE_PRIVATE);
-        token = sharedPref.getString(Constances.TOKEN, "");
+        sharedPref = getActivity().getSharedPreferences(Constants.MY_PREFS, Context.MODE_PRIVATE);
+        token = sharedPref.getString(Constants.TOKEN, "");
 
         //callback
         MainActivity.setOnActivityResultDataChanged((this));

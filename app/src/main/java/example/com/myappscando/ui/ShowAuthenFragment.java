@@ -55,7 +55,6 @@ public class ShowAuthenFragment extends Fragment implements Backable {
     //Callback
     authenCallback listener;
 
-
     public ShowAuthenFragment() {
         // Required empty public constructor
     }
@@ -116,13 +115,6 @@ public class ShowAuthenFragment extends Fragment implements Backable {
                     params.put("lon", String.valueOf(myModelToPhp.getLo()));
                     params.put("address", myModelToPhp.getAddresses());
                     params.put("user_id", myModelToPhp.getStr_userid());
-
-                    Log.d("check123", "token  => " + myModelToPhp.getToken());
-                    Log.d("check123", "pid  => " + myModelToPhp.getPid());
-                    Log.d("check123", "lat  => " + String.valueOf(myModelToPhp.getLa()));
-                    Log.d("check123", "lon  => " + String.valueOf(myModelToPhp.getLo()));
-                    Log.d("check123", "address  => " + myModelToPhp.getAddresses());
-                    Log.d("check123", "user_id  => " + myModelToPhp.getStr_userid());
                 }
                 return params;
             }

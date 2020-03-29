@@ -30,10 +30,6 @@ public class DetailProductFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        //textViewCreator = v.findViewById(R.id.textViewCreator);
-//        textViewLike = v.findViewById(R.id.textViewLike);
-
         v =  inflater.inflate(R.layout.fragment_detail_product, container, false);
         textViewCreator = v.findViewById(R.id.textViewCreator);
         //textViewLike = v.findViewById(R.id.textViewLike);
@@ -44,8 +40,6 @@ public class DetailProductFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
 
         if(getArguments() != null){
             exampleItem = getArguments().getParcelable("key");

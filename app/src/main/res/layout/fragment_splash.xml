@@ -15,6 +15,6 @@
         android:background="@drawable/bg_color"
         android:gravity="center"
         android:textColor="#fff"
-        android:text="Login Register App"
+        android:text="Please wait..."
         android:textAlignment="center" />
 </LinearLayout>
