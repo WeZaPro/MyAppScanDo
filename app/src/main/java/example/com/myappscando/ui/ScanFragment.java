@@ -85,7 +85,9 @@ public class ScanFragment extends Fragment implements Backable, OnActivityResult
         sharedPref = getActivity().getSharedPreferences(Constances.MY_PREFS, Context.MODE_PRIVATE);
         token = sharedPref.getString(Constances.TOKEN, "");
 
+        //callback
         MainActivity.setOnActivityResultDataChanged((this));
+        //googlemap
         requestPermissionGooglemap();
         return v;
     }

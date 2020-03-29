@@ -1,5 +1,6 @@
 package example.com.myappscando.ui;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -36,6 +37,7 @@ import example.com.myappscando.R;
 import utils.Backable;
 import utils.MyModelSaveDb;
 import utils.MyModelToPhp;
+import utils.authenCallback;
 
 // get data from ScanFragment + save to database + goto AhowAuthen2Fragment
 public class ShowAuthenFragment extends Fragment implements Backable {
@@ -50,6 +52,8 @@ public class ShowAuthenFragment extends Fragment implements Backable {
     RequestQueue requestQueue;
     StringRequest stringRequest;
     String URL_SAVE_DB = "http://192.168.64.2/app_scanme/scanme.php";
+    //Callback
+    authenCallback listener;
 
 
     public ShowAuthenFragment() {
@@ -129,7 +133,7 @@ public class ShowAuthenFragment extends Fragment implements Backable {
         requestQueue.add(stringRequest);
 
         //test goto ShowAuthen2Fragment
-        ShowAuthen2Fragment showAuthen2Fragment = new ShowAuthen2Fragment();
+        /*ShowAuthen2Fragment showAuthen2Fragment = new ShowAuthen2Fragment();
         Bundle b = new Bundle();
         b.putString("key",myModelToPhp.getPid());
         showAuthen2Fragment.setArguments(b);
@@ -137,9 +141,10 @@ public class ShowAuthenFragment extends Fragment implements Backable {
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.contentContainer, showAuthen2Fragment)
-                .commit();
+                .commit();*/
 
-
+        // send to callback / callback to ShowAuthen2Fragment
+        listener.callbackToAuthen2Fragment(myModelToPhp.getPid());
     }
 
    @Override
@@ -154,4 +159,20 @@ public class ShowAuthenFragment extends Fragment implements Backable {
         return true;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof authenCallback) {
+            listener = (authenCallback) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement SampleCallback");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
+    }
 }

@@ -15,6 +15,7 @@ import utils.Backable;
 import utils.MyModelSaveDb;
 import utils.OnActivityResultDataChanged;
 import utils.OnScanQrButtonClicked;
+import utils.authenCallback;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,8 +25,9 @@ import java.util.List;
 import static example.com.myappscando.ui.ScanFragment.myModelSaveDb;
 import static utils.Constants.SHARED_PREFERENCES_NAME;
 
-public class MainActivity extends AppCompatActivity implements OnScanQrButtonClicked {
+public class MainActivity extends AppCompatActivity implements OnScanQrButtonClicked, authenCallback {
 
+    //Callback
     public static OnActivityResultDataChanged mOnActivityResultDataChanged;
 
     public static void setOnActivityResultDataChanged(OnActivityResultDataChanged listener) {
@@ -145,5 +147,18 @@ public class MainActivity extends AppCompatActivity implements OnScanQrButtonCli
         integrator.setBarcodeImageEnabled(false);
         integrator.setOrientationLocked(true);
         integrator.initiateScan();
+    }
+
+    @Override
+    public void callbackToAuthen2Fragment(String pid) {
+        ShowAuthen2Fragment showAuthen2Fragment = new ShowAuthen2Fragment();
+        Bundle b = new Bundle();
+        b.putString("key",pid);
+        showAuthen2Fragment.setArguments(b);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.contentContainer, showAuthen2Fragment)
+                .commit();
     }
 }
