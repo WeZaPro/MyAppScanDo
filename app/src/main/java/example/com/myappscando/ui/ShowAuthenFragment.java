@@ -1,5 +1,6 @@
 package example.com.myappscando.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,6 +34,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.fragment.app.FragmentActivity;
 import example.com.myappscando.R;
 import utils.Backable;
 import utils.MyModelSaveDb;
@@ -64,6 +66,7 @@ public class ShowAuthenFragment extends Fragment implements Backable {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_show_authen, container, false);
+        Log.d("response","activity_onCreateView ==> "+getActivity());
 
         myModelToPhp = new MyModelToPhp();
 
@@ -83,23 +86,27 @@ public class ShowAuthenFragment extends Fragment implements Backable {
         myModelToPhp.setStr_userid(str_userid);
         myModelToPhp.setToken(token);
 
-        saveToDatabase();
+        saveToDatabase(getActivity());
         return v;
     }
 
-    private void saveToDatabase() {
+    private void saveToDatabase(final Activity activity) {
 
         stringRequest = new StringRequest(Request.Method.POST, URL_SAVE_DB,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        //Toast.makeText(getActivity(), "insert complete ..." + response, Toast.LENGTH_LONG).show();
-                        //tvTempPid.getText().clear();
+                        //Log.d("response","response ==> "+response);
+                        Log.d("response","activity_saveToDatabase ==> "+activity);
+                        // ตอนแรก getActivity แล้ว error เพราะค่าที่รับมาเป็น null
+                        Toast.makeText(activity, "insert complete ..." + response, Toast.LENGTH_LONG).show();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "insert error ...please value is emtry "+error, Toast.LENGTH_LONG).show();
+                //Log.d("response","error ==> "+error);
+                // ตอนแรก getActivity แล้ว error เพราะค่าที่รับมาเป็น null
+                Toast.makeText(activity, "insert error ...please value is emtry "+error, Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
@@ -108,6 +115,7 @@ public class ShowAuthenFragment extends Fragment implements Backable {
                 Map<String, String> params = new HashMap<String, String>();
                 if (getArguments() == null) {
                     Toast.makeText(getActivity(), "Please insert value ", Toast.LENGTH_LONG).show();
+
                 } else {
                     params.put("fcm_token", myModelToPhp.getToken());
                     params.put("pid", myModelToPhp.getPid());
@@ -115,6 +123,7 @@ public class ShowAuthenFragment extends Fragment implements Backable {
                     params.put("lon", String.valueOf(myModelToPhp.getLo()));
                     params.put("address", myModelToPhp.getAddresses());
                     params.put("user_id", myModelToPhp.getStr_userid());
+                    //Log.d("response","insert data ==> complete");
                 }
                 return params;
             }
