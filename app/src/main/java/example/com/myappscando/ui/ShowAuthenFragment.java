@@ -123,7 +123,7 @@ public class ShowAuthenFragment extends Fragment implements Backable {
                     } else if (error instanceof ParseError) {
                     } else if (error instanceof NoConnectionError) {
                     } else if (error instanceof TimeoutError) {
-                        Toast.makeText(getContext(),
+                        Toast.makeText(activity,
                                 "Oops. Timeout error!",
                                 Toast.LENGTH_LONG).show();
                     }
