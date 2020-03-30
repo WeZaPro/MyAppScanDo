@@ -20,6 +20,7 @@ import utils.authenCallback;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
 import java.util.List;
 
 import static example.com.myappscando.ui.ScanFragment.myModelSaveDb;
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements OnScanQrButtonCli
             }
             {
                 mOnActivityResultDataChanged.onDataReceived(result.getContents());
-                gotoGetDataFragment(result.getContents(),myModelSaveDb());
+                gotoGetDataFragment(result.getContents(), myModelSaveDb());
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -84,10 +85,10 @@ public class MainActivity extends AppCompatActivity implements OnScanQrButtonCli
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.contentContainer, showAuthenFragment)
-                //.addToBackStack("")
+                //.addToBackStack("")\
                 .commitAllowingStateLoss();
-    }
 
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -140,12 +141,21 @@ public class MainActivity extends AppCompatActivity implements OnScanQrButtonCli
     @Override
     public void triggerScanQr() {
         System.out.println("Fragment Just Triggered MainActivity");
-        IntentIntegrator integrator = new IntentIntegrator(this);
+        /*IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
         integrator.setCameraId(0);
         integrator.setBeepEnabled(true);
         integrator.setBarcodeImageEnabled(false);
         integrator.setOrientationLocked(true);
+        integrator.initiateScan();*/
+
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setCaptureActivity(AnyOrientationCaptureActivity.class);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+        integrator.setPrompt("Scan something");
+        integrator.setCameraId(0);
+        integrator.setOrientationLocked(false);
+        integrator.setBeepEnabled(false);
         integrator.initiateScan();
     }
 
@@ -153,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements OnScanQrButtonCli
     public void callbackToAuthen2Fragment(String pid) {
         ShowAuthen2Fragment showAuthen2Fragment = new ShowAuthen2Fragment();
         Bundle b = new Bundle();
-        b.putString("key",pid);
+        b.putString("key", pid);
         showAuthen2Fragment.setArguments(b);
 
         getSupportFragmentManager()

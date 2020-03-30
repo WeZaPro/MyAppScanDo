@@ -76,6 +76,7 @@ public class ShowAuthen2Fragment extends Fragment implements Backable {
                     @Override
                     public void onResponse(String response) {
                         //get_response_text.setText("Data : "+response);
+                        Log.d("response","ShowAuthen2 Fragment ==>response ==> "+response);
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                     /*get_response_text.setText("name :"+jsonObject.getString("name")+"\n");
@@ -105,6 +106,7 @@ public class ShowAuthen2Fragment extends Fragment implements Backable {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //get_response_text.setText("Data : Response Failed");
+                Log.d("response","ShowAuthen2 Fragment ==>error ==> "+error);
             }
         }){
             @Override

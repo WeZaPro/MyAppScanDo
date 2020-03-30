@@ -129,6 +129,7 @@ public class ScanFragment extends Fragment implements Backable, OnActivityResult
             @Override
             public void onClick(View view) {
                 mOnScanQrButtonClickedListener.triggerScanQr();
+
             }
         });
     }
@@ -161,6 +162,7 @@ public class ScanFragment extends Fragment implements Backable, OnActivityResult
     public void onDataReceived(String data) {
         //get data to show in MainFragment
         //Toast.makeText(getActivity(),"FM-Scan Data is : "+data,Toast.LENGTH_SHORT).show();
+        Log.d("response","ScanFragment ==> "+data);
     }
 
     // request permission google map

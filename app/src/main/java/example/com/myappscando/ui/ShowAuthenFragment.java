@@ -19,9 +19,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -66,7 +71,7 @@ public class ShowAuthenFragment extends Fragment implements Backable {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_show_authen, container, false);
-        Log.d("response","activity_onCreateView ==> "+getActivity());
+        //Log.d("response","activity_onCreateView ==> "+getActivity());
 
         myModelToPhp = new MyModelToPhp();
 
@@ -92,42 +97,63 @@ public class ShowAuthenFragment extends Fragment implements Backable {
 
     private void saveToDatabase(final Activity activity) {
 
-        stringRequest = new StringRequest(Request.Method.POST, URL_SAVE_DB,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //Log.d("response","response ==> "+response);
-                        Log.d("response","activity_saveToDatabase ==> "+activity);
-                        // ตอนแรก getActivity แล้ว error เพราะค่าที่รับมาเป็น null
-                        Toast.makeText(activity, "insert complete ..." + response, Toast.LENGTH_LONG).show();
+        try{
+
+            stringRequest = new StringRequest(Request.Method.POST, URL_SAVE_DB,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            //Log.d("response","response ==> "+response);
+                            //Log.d("response","ShowAuthenFragment ==>response ==> "+activity);
+                            Log.d("response","ShowAuthenFragment ==>response ==> "+response);
+                            // ตอนแรก getActivity แล้ว error เพราะค่าที่รับมาเป็น null
+                            Toast.makeText(activity, "insert complete ..." + response, Toast.LENGTH_LONG).show();
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("response","ShowAuthenFragment ==>error ==> "+error);
+                    // ตอนแรก getActivity แล้ว error เพราะค่าที่รับมาเป็น null
+                    Toast.makeText(activity, "insert error ...please value is emtry "+error, Toast.LENGTH_LONG).show();
+
+                    //test แก้เรื่อง Timeout error ทำให้ save database เบิ้ล 2 ครั้ง
+                    if (error instanceof NetworkError) {
+                    } else if (error instanceof ServerError) {
+                    } else if (error instanceof AuthFailureError) {
+                    } else if (error instanceof ParseError) {
+                    } else if (error instanceof NoConnectionError) {
+                    } else if (error instanceof TimeoutError) {
+                        Toast.makeText(getContext(),
+                                "Oops. Timeout error!",
+                                Toast.LENGTH_LONG).show();
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //Log.d("response","error ==> "+error);
-                // ตอนแรก getActivity แล้ว error เพราะค่าที่รับมาเป็น null
-                Toast.makeText(activity, "insert error ...please value is emtry "+error, Toast.LENGTH_LONG).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
 
-                Map<String, String> params = new HashMap<String, String>();
-                if (getArguments() == null) {
-                    Toast.makeText(getActivity(), "Please insert value ", Toast.LENGTH_LONG).show();
-
-                } else {
-                    params.put("fcm_token", myModelToPhp.getToken());
-                    params.put("pid", myModelToPhp.getPid());
-                    params.put("lat", String.valueOf(myModelToPhp.getLa()));
-                    params.put("lon", String.valueOf(myModelToPhp.getLo()));
-                    params.put("address", myModelToPhp.getAddresses());
-                    params.put("user_id", myModelToPhp.getStr_userid());
-                    //Log.d("response","insert data ==> complete");
                 }
-                return params;
-            }
-        };
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+
+                    Map<String, String> params = new HashMap<String, String>();
+                    if (getArguments() == null) {
+                        Toast.makeText(activity, "Please insert value ", Toast.LENGTH_LONG).show();
+
+                    } else {
+                        params.put("fcm_token", myModelToPhp.getToken());
+                        params.put("pid", myModelToPhp.getPid());
+                        params.put("lat", String.valueOf(myModelToPhp.getLa()));
+                        params.put("lon", String.valueOf(myModelToPhp.getLo()));
+                        params.put("address", myModelToPhp.getAddresses());
+                        params.put("user_id", myModelToPhp.getStr_userid());
+                        //Log.d("response","insert data ==> complete");
+                    }
+                    return params;
+                }
+            };
+        }catch (Exception e){
+
+            Toast.makeText(activity, "Exception error "+e, Toast.LENGTH_LONG).show();
+        }
+
         // Creating RequestQueue.
         requestQueue = Volley.newRequestQueue(getActivity());
         // Adding the StringRequest object into requestQueue.
@@ -146,6 +172,7 @@ public class ShowAuthenFragment extends Fragment implements Backable {
 
         // send to callback / callback to ShowAuthen2Fragment
         listener.callbackToAuthen2Fragment(myModelToPhp.getPid());
+
     }
 
    @Override
