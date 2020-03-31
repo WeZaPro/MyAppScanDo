@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
@@ -56,10 +57,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         msg = remoteMessage.getData().toString();
         Log.d("check", msg);
         //Intent notificationIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.sirivatana.co.th/"));
-        //Intent notificationIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(imageUri));
+        // click image notify to open web url
+        Intent notificationIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(imageUri));
 
-        // click action on notification ##############
-        Intent notificationIntent = new Intent(click_action);
+        // click action on notification ############## to open activity
+        //Intent notificationIntent = new Intent(click_action);
 
         //test send intent parameter to NotificationActivity
         notificationIntent.putExtra("NotificationMessage", remoteMessage.getNotification().getTitle());

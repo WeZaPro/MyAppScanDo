@@ -158,7 +158,6 @@ public class ShowAuthenFragment extends Fragment implements Backable {
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
 
-
         }catch (Exception e){
 
             Toast.makeText(activity, "Exception error "+e, Toast.LENGTH_LONG).show();
