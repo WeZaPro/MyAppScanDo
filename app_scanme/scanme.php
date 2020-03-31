@@ -3,8 +3,7 @@
 require "init_fcm.php";
 
 $api_url = "https://fcm.googleapis.com/fcm/send";
-$server_key = "key=AAAAQ2Jh_YE:APA91bF1GpK09sGySQwHLCcZhb55jRLVsfncFYe16JCjJLGW6iG0SCmYQuUROF4LB_xT7lMzGa_8F4vdI2CbrdAnr7-vhdQPU8XSovlieuPF_47K48HeU0JXUPuobs9NKfnzBiJ9UF-G";
-  
+$server_key = "key=AAAAQ2Jh_YE:APA91bF1GpK09sGySQwHLCcZhb55jRLVsfncFYe16JCjJLGW6iG0SCmYQuUROF4LB_xT7lMzGa_8F4vdI2CbrdAnr7-vhdQPU8XSovlieuPF_47K48HeU0JXUPuobs9NKfnzBiJ9UF-G"; 
 $color = "#f1c40f";
 
 // insert data

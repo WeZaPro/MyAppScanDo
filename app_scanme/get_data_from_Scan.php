@@ -32,3 +32,7 @@ $product_image=$row[2];
 $data=array("pid"=>$pid,"product_name"=>$product_name,"product_image"=>$product_image,"count_row"=>$num_rows);
 //$data=array("name"=>"Value 1","email"=>"Value 2","address"=>"Value 3");
 echo json_encode($data);
+
+// test ใส่
+mysqli_close($conn);
+?>

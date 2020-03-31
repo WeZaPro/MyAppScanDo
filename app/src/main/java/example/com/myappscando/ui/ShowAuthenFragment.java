@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
@@ -107,16 +108,17 @@ public class ShowAuthenFragment extends Fragment implements Backable {
                             //Log.d("response","ShowAuthenFragment ==>response ==> "+activity);
                             Log.d("response","ShowAuthenFragment ==>response ==> "+response);
                             // ตอนแรก getActivity แล้ว error เพราะค่าที่รับมาเป็น null
-                            Toast.makeText(activity, "insert complete ..." + response, Toast.LENGTH_LONG).show();
+                            //Toast.makeText(activity, "insert complete ..." + response, Toast.LENGTH_LONG).show();
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.d("response","ShowAuthenFragment ==>error ==> "+error);
                     // ตอนแรก getActivity แล้ว error เพราะค่าที่รับมาเป็น null
-                    Toast.makeText(activity, "insert error ...please value is emtry "+error, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(activity, "insert error ...please value is emtry "+error, Toast.LENGTH_LONG).show();
 
                     //test แก้เรื่อง Timeout error ทำให้ save database เบิ้ล 2 ครั้ง
+                    //Todo test edit TimeoutError ==>1
                     if (error instanceof NetworkError) {
                     } else if (error instanceof ServerError) {
                     } else if (error instanceof AuthFailureError) {
@@ -149,6 +151,14 @@ public class ShowAuthenFragment extends Fragment implements Backable {
                     return params;
                 }
             };
+            //Todo test edit TimeoutError ==>2
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    6000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+
+
         }catch (Exception e){
 
             Toast.makeText(activity, "Exception error "+e, Toast.LENGTH_LONG).show();
