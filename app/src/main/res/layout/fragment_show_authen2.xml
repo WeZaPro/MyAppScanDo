@@ -23,8 +23,7 @@
             android:id="@+id/image_view"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:padding="10dp"
-            android:src="@drawable/scanqrcode" />
+            android:padding="10dp" />
 
         <TextView
             android:id="@+id/tvProductName"

@@ -160,10 +160,11 @@ public class MainActivity extends AppCompatActivity implements OnScanQrButtonCli
     }
 
     @Override
-    public void callbackToAuthen2Fragment(String pid) {
+    public void callbackToAuthen2Fragment(String pid,String token) {
         ShowAuthen2Fragment showAuthen2Fragment = new ShowAuthen2Fragment();
         Bundle b = new Bundle();
         b.putString("key", pid);
+        b.putString("token", token);
         showAuthen2Fragment.setArguments(b);
 
         getSupportFragmentManager()

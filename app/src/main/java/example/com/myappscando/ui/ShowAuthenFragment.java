@@ -106,7 +106,7 @@ public class ShowAuthenFragment extends Fragment implements Backable {
                         public void onResponse(String response) {
                             //Log.d("response","response ==> "+response);
                             //Log.d("response","ShowAuthenFragment ==>response ==> "+activity);
-                            Log.d("response","ShowAuthenFragment ==>response ==> "+response);
+                            Log.d("response","ShowAuthenFragment ==>response 123 ==> "+response);
                             // ตอนแรก getActivity แล้ว error เพราะค่าที่รับมาเป็น null
                             //Toast.makeText(activity, "insert complete ..." + response, Toast.LENGTH_LONG).show();
                         }
@@ -180,7 +180,7 @@ public class ShowAuthenFragment extends Fragment implements Backable {
                 .commit();*/
 
         // send to callback / callback to ShowAuthen2Fragment
-        listener.callbackToAuthen2Fragment(myModelToPhp.getPid());
+        listener.callbackToAuthen2Fragment(myModelToPhp.getPid(),myModelToPhp.getToken());
 
     }
 

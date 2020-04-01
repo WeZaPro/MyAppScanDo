@@ -42,7 +42,7 @@ public class ShowAuthen2Fragment extends Fragment implements Backable {
     RequestQueue queue;
     StringRequest stringRequest;
     //local
-    TextView tvProductId,tvProductName,tvProductCount;
+    TextView tvProductId, tvProductName, tvProductCount;
     ImageView image_view;
     String imageUrl;
     View v;
@@ -61,42 +61,53 @@ public class ShowAuthen2Fragment extends Fragment implements Backable {
         image_view = v.findViewById(R.id.image_view);
         tvProductCount = v.findViewById(R.id.tvProductCount);
 
-        if(getArguments() != null){
+        if (getArguments() != null) {
             String pid = getArguments().getString("key");
-            Log.d("pid","PID==>"+pid);
-            sendGetRequest(pid);
+            String token = getArguments().getString("token");
+            Log.d("chk", "PID==>" + pid);
+            Log.d("chk", "TOKEN==>" + token);
+            sendGetRequest(pid, token);
         }
         return v;
     }
 
-    private void sendGetRequest(final String pid_code) {
+    private void sendGetRequest(final String pid_code, final String token) {
+        Log.d("response2", "ShowAuthen2 Fragment ==>PID ==> " + pid_code);
 
-        stringRequest=new StringRequest(Request.Method.POST, URL_GET_DB,
+        stringRequest = new StringRequest(Request.Method.POST, URL_GET_DB,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         //get_response_text.setText("Data : "+response);
-                        Log.d("response","ShowAuthen2 Fragment ==>response ==> "+response);
+                        //Log.d("response2","ShowAuthen2 Fragment ==>response ==> "+response);
+                        /*if(response.isEmpty()){
+                            Log.d("response2","NoData++++++");
+                        }*/
+
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                    /*get_response_text.setText("name :"+jsonObject.getString("name")+"\n");
-                    get_response_text.append("email :"+jsonObject.getString("email")+"\n");
-                    get_response_text.append("address :"+jsonObject.getString("address")+"\n");*/
-                            tvProductName.setText("product_name : "+jsonObject.getString("product_name"));
-                            imageUrl = jsonObject.getString("product_image");
-                            tvProductCount.setText("AUTHEN : "+jsonObject.getString("count_row"));
-                            tvProductId.setText("Product id : "+jsonObject.getString("pid"));
+                            String productName = jsonObject.getString("product_name");
 
-                    /*Picasso.get().load(imageUrl)
-                            .fit()
-                            .centerInside()
-                            //.centerCrop(-18)
-                            //.centerCrop(0)
-                            .into(image_view);*/
-                            new LoadImagefromUrl( ).execute( image_view, imageUrl );
+                            if (jsonObject.isNull("product_name")) {
+                                Log.d("response2", "null data===>" + productName);
+                                Toast.makeText(getActivity(), "data is null " + productName, Toast.LENGTH_SHORT).show();
 
-                        }
-                        catch (Exception e){
+                                // goto NoData Fragment
+                                NoDataFragment noDataFragment = new NoDataFragment();
+                                getActivity().getSupportFragmentManager()
+                                        .beginTransaction()
+                                        .replace(R.id.contentContainer, noDataFragment)
+                                        .commit();
+                            } else {
+                                tvProductName.setText("product_name : " + productName);
+                                imageUrl = jsonObject.getString("product_image");
+                                tvProductCount.setText("AUTHEN : " + jsonObject.getString("count_row"));
+                                tvProductId.setText("Product id : " + jsonObject.getString("pid"));
+
+                                new LoadImagefromUrl().execute(image_view, imageUrl);
+                            }
+
+                        } catch (Exception e) {
                             e.printStackTrace();
                             //get_response_text.setText("Failed to Parse Json");
                         }
@@ -106,53 +117,55 @@ public class ShowAuthen2Fragment extends Fragment implements Backable {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //get_response_text.setText("Data : Response Failed");
-                Log.d("response","ShowAuthen2 Fragment ==>error ==> "+error);
+                Log.d("response2", "ShowAuthen2 Fragment ==>error ==> " + error);
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<String, String>();
 
                 params.put("pid", pid_code);
+                params.put("fcm_token", token);
 
                 return params;
             }
         };
 
-        queue= Volley.newRequestQueue(getActivity());
+        queue = Volley.newRequestQueue(getActivity());
         queue.add(stringRequest);
     }
+
     //// load image url
-    private class LoadImagefromUrl extends AsyncTask< Object, Void, Bitmap> {
+    private class LoadImagefromUrl extends AsyncTask<Object, Void, Bitmap> {
         ImageView ivPreview = null;
 
         @Override
-        protected Bitmap doInBackground( Object... params ) {
+        protected Bitmap doInBackground(Object... params) {
             this.ivPreview = (ImageView) params[0];
             String url = (String) params[1];
             System.out.println(url);
-            return loadBitmap( url );
+            return loadBitmap(url);
         }
 
         @Override
-        protected void onPostExecute( Bitmap result ) {
-            super.onPostExecute( result );
-            ivPreview.setImageBitmap( result );
+        protected void onPostExecute(Bitmap result) {
+            super.onPostExecute(result);
+            ivPreview.setImageBitmap(result);
         }
     }
 
-    public Bitmap loadBitmap( String url ) {
+    public Bitmap loadBitmap(String url) {
         URL newurl = null;
         Bitmap bitmap = null;
         try {
-            newurl = new URL( url );
-            bitmap = BitmapFactory.decodeStream( newurl.openConnection( ).getInputStream( ) );
-        } catch ( MalformedURLException e ) {
-            e.printStackTrace( );
-        } catch ( IOException e ) {
+            newurl = new URL(url);
+            bitmap = BitmapFactory.decodeStream(newurl.openConnection().getInputStream());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
 
-            e.printStackTrace( );
+            e.printStackTrace();
         }
         return bitmap;
     }

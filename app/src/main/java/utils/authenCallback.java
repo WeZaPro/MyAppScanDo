@@ -1,5 +1,5 @@
 package utils;
 
 public interface authenCallback {
-    void callbackToAuthen2Fragment(String pid);
+    void callbackToAuthen2Fragment(String pid,String token);
 }

@@ -47,7 +47,7 @@
 
         <activity android:name=".fcm.NotificationActivity">
             <intent-filter>
-                <action android:name="example.com.sendtokengetmsg" />
+                <action android:name="example.com.myappscando" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

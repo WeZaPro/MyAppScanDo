@@ -30,7 +30,8 @@ import utils.Constants;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
-    private final String ADMIN_CHANNEL_ID = "admin_channel";
+    //private final String ADMIN_CHANNEL_ID = "admin_channel";
+    private final String ADMIN_CHANNEL_ID = "data";
     String msg;
 
     @Override
@@ -42,6 +43,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String click_action = remoteMessage.getNotification().getClickAction();
 
         String imageUri = remoteMessage.getData().get("image");
+        // click to web / get url from body from postman
 
         //test send image %%%%%%%%
         // เอาไว้ลองใหม่ @@@@@@@
@@ -57,7 +59,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         msg = remoteMessage.getData().toString();
         Log.d("check", msg);
         //Intent notificationIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.sirivatana.co.th/"));
-        // click image notify to open web url
+        // click image notify ############## to open web url
         Intent notificationIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(imageUri));
 
         // click action on notification ############## to open activity
