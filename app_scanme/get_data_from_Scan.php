@@ -21,9 +21,9 @@ $row = mysqli_fetch_row($result_select);
 $num_rows = mysqli_num_rows ( $result_select );
 
 if($num_rows > '1'){
-    $num_rows = 'REGISTER - COPY';
+    $num_rows = 'REGISTER-COPY';
 }else{
-    $num_rows = 'REGISTER - AUTHENTIC';
+    $num_rows = 'REGISTER-AUTHENTIC';
 }
 
 $pid=$row[0];
@@ -44,8 +44,6 @@ $color = "#f1c40f";
 
 $result_notify = mysqli_query($conn,$sql_select);
 $row_notify = mysqli_fetch_row($result_notify);
-
-// error คนละเครื่องเรียกซ้ำ Count นับผิด
 
 $num_rows_notify = mysqli_num_rows ( $result_notify );
 

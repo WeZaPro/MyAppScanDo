@@ -40,7 +40,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Log.d("getMsg","GET MESSAGE");
 
         // click action on notification ##############
-        String click_action = remoteMessage.getNotification().getClickAction();
+        //String click_action = remoteMessage.getNotification().getClickAction();
 
         String imageUri = remoteMessage.getData().get("image");
         // click to web / get url from body from postman

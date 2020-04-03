@@ -89,6 +89,5 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
     implementation 'com.google.zxing:core:3.4.0'
 
-    //fcm
-    implementation 'com.google.firebase:firebase-analytics:17.2.3'
+
 }

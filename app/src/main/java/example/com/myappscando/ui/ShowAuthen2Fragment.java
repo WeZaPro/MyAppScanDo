@@ -17,9 +17,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -43,7 +49,7 @@ public class ShowAuthen2Fragment extends Fragment implements Backable {
     StringRequest stringRequest;
     //local
     TextView tvProductId, tvProductName, tvProductCount;
-    ImageView image_view;
+    ImageView image_view,mv_authen;
     String imageUrl;
     View v;
 
@@ -59,6 +65,7 @@ public class ShowAuthen2Fragment extends Fragment implements Backable {
         tvProductId = v.findViewById(R.id.tvProductId);
         tvProductName = v.findViewById(R.id.tvProductName);
         image_view = v.findViewById(R.id.image_view);
+        mv_authen = v.findViewById(R.id.mv_authen);
         tvProductCount = v.findViewById(R.id.tvProductCount);
 
         if (getArguments() != null) {
@@ -105,6 +112,15 @@ public class ShowAuthen2Fragment extends Fragment implements Backable {
                                 tvProductId.setText("Product id : " + jsonObject.getString("pid"));
 
                                 new LoadImagefromUrl().execute(image_view, imageUrl);
+
+                                String authen = jsonObject.getString("count_row");
+                                if(authen.equals("REGISTER-AUTHENTIC")){
+                                    Log.d("AUTHEN","AUTHENTIC==> "+authen);
+                                    mv_authen.setImageResource(R.drawable.ic_launcher_authentic);
+                                }else{
+                                    Log.d("AUTHEN","COPY==> "+authen);
+                                    mv_authen.setImageResource(R.drawable.ic_launcher_copy);
+                                }
                             }
 
                         } catch (Exception e) {
@@ -118,6 +134,20 @@ public class ShowAuthen2Fragment extends Fragment implements Backable {
             public void onErrorResponse(VolleyError error) {
                 //get_response_text.setText("Data : Response Failed");
                 Log.d("response2", "ShowAuthen2 Fragment ==>error ==> " + error);
+
+                //test แก้เรื่อง Timeout error ทำให้ save database เบิ้ล 2 ครั้ง
+                //Todo test edit TimeoutError ==>1
+                if (error instanceof NetworkError) {
+                } else if (error instanceof ServerError) {
+                } else if (error instanceof AuthFailureError) {
+                } else if (error instanceof ParseError) {
+                } else if (error instanceof NoConnectionError) {
+                } else if (error instanceof TimeoutError) {
+                    /*Toast.makeText(getActivity(),
+                            "Oops. Timeout error!",
+                            Toast.LENGTH_LONG).show();*/
+                    Log.d("response2", "ShowAuthen2 Fragment ==>error in if else ==> " + error);
+                }
             }
         }) {
             @Override
@@ -131,6 +161,13 @@ public class ShowAuthen2Fragment extends Fragment implements Backable {
                 return params;
             }
         };
+
+        //Todo test edit TimeoutError ==>2
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                6000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
 
         queue = Volley.newRequestQueue(getActivity());
         queue.add(stringRequest);
