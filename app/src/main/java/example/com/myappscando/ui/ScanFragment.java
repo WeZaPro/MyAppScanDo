@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -45,7 +46,8 @@ import static utils.Constants.USER_NAME;
 
 public class ScanFragment extends Fragment implements Backable, OnActivityResultDataChanged {
     View v;
-    Button btn_scan;
+    //Button btn_scan;
+    ImageView mv_scan;
     //Google location
     FusedLocationProviderClient client;
     Geocoder geocoder;
@@ -71,7 +73,8 @@ public class ScanFragment extends Fragment implements Backable, OnActivityResult
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_scan, container, false);
-        btn_scan = v.findViewById(R.id.btn_scan);
+        //btn_scan = v.findViewById(R.id.btn_scan);
+        mv_scan = v.findViewById(R.id.mv_scan);
 
         // location
         client = LocationServices.getFusedLocationProviderClient(getActivity());
@@ -125,7 +128,7 @@ public class ScanFragment extends Fragment implements Backable, OnActivityResult
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        btn_scan.setOnClickListener(new View.OnClickListener() {
+        mv_scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mOnScanQrButtonClickedListener.triggerScanQr();

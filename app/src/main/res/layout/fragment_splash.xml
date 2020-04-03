@@ -12,16 +12,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center"
-        android:background="#2196F3">
+        android:gravity="center">
 
-        <TextView
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:indeterminateTint="@color/colorPrimary"
+            android:visibility="gone"/>
+
+        <!--<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Please wait..."
             android:textColor="#fff"
             android:gravity="center"
-            android:padding="10dp"/>
+            android:padding="10dp"/>-->
 
     </LinearLayout>
 

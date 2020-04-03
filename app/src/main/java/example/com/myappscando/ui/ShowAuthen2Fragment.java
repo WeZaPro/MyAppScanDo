@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,7 @@ public class ShowAuthen2Fragment extends Fragment implements Backable {
     ImageView image_view,mv_authen;
     String imageUrl;
     View v;
+    ProgressBar progressBar;
 
     public ShowAuthen2Fragment() {
         // Required empty public constructor
@@ -67,6 +69,9 @@ public class ShowAuthen2Fragment extends Fragment implements Backable {
         image_view = v.findViewById(R.id.image_view);
         mv_authen = v.findViewById(R.id.mv_authen);
         tvProductCount = v.findViewById(R.id.tvProductCount);
+
+        progressBar = v.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
 
         if (getArguments() != null) {
             String pid = getArguments().getString("key");
@@ -90,6 +95,7 @@ public class ShowAuthen2Fragment extends Fragment implements Backable {
                         /*if(response.isEmpty()){
                             Log.d("response2","NoData++++++");
                         }*/
+                        progressBar.setVisibility(View.INVISIBLE);
 
                         try {
                             JSONObject jsonObject = new JSONObject(response);

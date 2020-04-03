@@ -8,22 +8,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#2196F3"
         android:gravity="center"
         android:orientation="vertical">
 
         <!-- TODO: Update blank fragment layout -->
-        <TextView
+        <!--<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Scan_fragment" />
+            android:text="Scan_fragment" />-->
 
-        <Button
+        <!--<Button
             android:id="@+id/btn_scan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Scan qrcode" />
+            android:text="Scan qrcode" />-->
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/icon_qrcode_color"
+            android:id="@+id/mv_scan"/>
 
     </LinearLayout>
 

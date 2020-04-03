@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import static utils.Constants.SHARED_PREFERENCES_NAME;
 import static utils.Constants.USER_ID;
@@ -22,6 +23,7 @@ public class SplashFragment extends Fragment {
     SharedPreferences sharedPreferences;
     String user_id;
     View v;
+    ProgressBar progressBar;
 
     public SplashFragment() {
         // Required empty public constructor
@@ -36,6 +38,9 @@ public class SplashFragment extends Fragment {
         if(savedInstanceState == null){
             //v =  inflater.inflate(R.layout.fragment_splash, container, false);
             v = inflater.inflate(R.layout.fragment_splash,container,false);
+
+            progressBar = v.findViewById(R.id.progressBar);
+            progressBar.setVisibility(View.VISIBLE);
 
             sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
             user_id = sharedPreferences.getString(USER_ID, "");
@@ -66,6 +71,8 @@ public class SplashFragment extends Fragment {
                             //.addToBackStack("")
                             .commit();
                 }
+
+                progressBar.setVisibility(View.INVISIBLE);
             }
         }, 2000);
     }
